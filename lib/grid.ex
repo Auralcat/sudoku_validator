@@ -18,9 +18,11 @@ defmodule SudokuValidator.Grid do
 
   defp into_number_strings(raw_sections) do
     Enum.map(raw_sections, fn section ->
-      String.split(section, "\n", trim: true)
-      |> Enum.map(fn x ->
-        split_vertical_separators(x)
+      section
+      |> String.split("\n", trim: true)
+      |> Enum.map(fn string_with_vertical_separator ->
+        string_with_vertical_separator
+        |> split_vertical_separators()
         |> split_numbers()
       end)
     end)
@@ -40,57 +42,29 @@ defmodule SudokuValidator.Grid do
 
   defp to_grid_map(nested_subgroups) do
     %{
-      "upper" => %{
-        "left" => [
-          Enum.at(Enum.at(nested_subgroups, 0), 0) |> Enum.at(0),
-          Enum.at(Enum.at(nested_subgroups, 0), 1) |> Enum.at(0),
-          Enum.at(Enum.at(nested_subgroups, 0), 2) |> Enum.at(0)
-        ],
-        "center" => [
-          Enum.at(Enum.at(nested_subgroups, 0), 0) |> Enum.at(1),
-          Enum.at(Enum.at(nested_subgroups, 0), 1) |> Enum.at(1),
-          Enum.at(Enum.at(nested_subgroups, 0), 2) |> Enum.at(1)
-        ],
-        "right" => [
-          Enum.at(Enum.at(nested_subgroups, 0), 0) |> Enum.at(2),
-          Enum.at(Enum.at(nested_subgroups, 0), 1) |> Enum.at(2),
-          Enum.at(Enum.at(nested_subgroups, 0), 2) |> Enum.at(2)
-        ]
-      },
-      "center" => %{
-        "left" => [
-          Enum.at(Enum.at(nested_subgroups, 1), 0) |> Enum.at(0),
-          Enum.at(Enum.at(nested_subgroups, 1), 1) |> Enum.at(0),
-          Enum.at(Enum.at(nested_subgroups, 1), 2) |> Enum.at(0)
-        ],
-        "center" => [
-          Enum.at(Enum.at(nested_subgroups, 1), 0) |> Enum.at(1),
-          Enum.at(Enum.at(nested_subgroups, 1), 1) |> Enum.at(1),
-          Enum.at(Enum.at(nested_subgroups, 1), 2) |> Enum.at(1)
-        ],
-        "right" => [
-          Enum.at(Enum.at(nested_subgroups, 1), 0) |> Enum.at(2),
-          Enum.at(Enum.at(nested_subgroups, 1), 1) |> Enum.at(2),
-          Enum.at(Enum.at(nested_subgroups, 1), 2) |> Enum.at(2)
-        ]
-      },
-      "lower" => %{
-        "left" => [
-          Enum.at(Enum.at(nested_subgroups, 2), 0) |> Enum.at(0),
-          Enum.at(Enum.at(nested_subgroups, 2), 1) |> Enum.at(0),
-          Enum.at(Enum.at(nested_subgroups, 2), 2) |> Enum.at(0)
-        ],
-        "center" => [
-          Enum.at(Enum.at(nested_subgroups, 2), 0) |> Enum.at(1),
-          Enum.at(Enum.at(nested_subgroups, 2), 1) |> Enum.at(1),
-          Enum.at(Enum.at(nested_subgroups, 2), 2) |> Enum.at(1)
-        ],
-        "right" => [
-          Enum.at(Enum.at(nested_subgroups, 2), 0) |> Enum.at(2),
-          Enum.at(Enum.at(nested_subgroups, 2), 1) |> Enum.at(2),
-          Enum.at(Enum.at(nested_subgroups, 2), 2) |> Enum.at(2)
-        ]
-      }
+      "upper" => subgroup_map(nested_subgroups, 0),
+      "center" => subgroup_map(nested_subgroups, 1),
+      "lower" => subgroup_map(nested_subgroups, 2)
+    }
+  end
+
+  defp subgroup_map(nested_subgroups, index) do
+    %{
+      "left" => [
+      Enum.at(Enum.at(nested_subgroups, index), 0) |> Enum.at(0),
+      Enum.at(Enum.at(nested_subgroups, index), 1) |> Enum.at(0),
+      Enum.at(Enum.at(nested_subgroups, index), 2) |> Enum.at(0)
+    ],
+      "center" => [
+        Enum.at(Enum.at(nested_subgroups, index), 0) |> Enum.at(1),
+        Enum.at(Enum.at(nested_subgroups, index), 1) |> Enum.at(1),
+        Enum.at(Enum.at(nested_subgroups, index), 2) |> Enum.at(1)
+      ],
+      "right" => [
+        Enum.at(Enum.at(nested_subgroups, index), 0) |> Enum.at(2),
+        Enum.at(Enum.at(nested_subgroups, index), 1) |> Enum.at(2),
+        Enum.at(Enum.at(nested_subgroups, index), 2) |> Enum.at(2)
+      ]
     }
   end
 end
