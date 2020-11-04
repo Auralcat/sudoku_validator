@@ -14,7 +14,6 @@ defmodule SudokuValidator do
     {:ok, complete_valid_grid} = File.read(File.cwd! <> "/test/fixtures/valid_complete.sudoku")
     {:ok, incomplete_valid_grid} = File.read(File.cwd! <> "/test/fixtures/valid_incomplete.sudoku")
 
-
     cond do
       grid == complete_valid_grid ->
         "This sudoku grid is valid."
