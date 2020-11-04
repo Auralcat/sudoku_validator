@@ -27,6 +27,18 @@ defmodule SudokuValidator.GridTest do
     assert Grid.fetch_column(sample_complete_grid(), 8) == [7, 9, 8, 2, 4, 6, 5, 3, 1]
   end
 
+  test "fetch_subgroup/2 returns the given subgroup for a sudoku grid struct" do
+    assert Grid.fetch_subgroup(sample_complete_grid(), 0) == [8, 5, 9, 7, 2, 3, 1, 6, 4]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 1) == [6, 1, 2, 8, 5, 4, 3, 7, 9]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 2) == [4, 3, 7, 1, 6, 9, 5, 2, 8]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 3) == [9, 8, 6, 3, 7, 5, 2, 4, 1]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 4) == [1, 4, 7, 2, 6, 8, 5, 9, 3]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 5) == [3, 5, 2, 9, 1, 4, 7, 8, 6]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 6) == [4, 3, 2, 6, 1, 7, 5, 9 ,8]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 7) == [9, 8, 1, 4, 2, 5, 7, 3, 6]
+    assert Grid.fetch_subgroup(sample_complete_grid(), 8) == [6, 7, 5, 8, 9, 3, 2, 4, 1]
+  end
+
   defp sample_complete_grid do
     %{
       "upper" => %{

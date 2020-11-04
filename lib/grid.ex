@@ -59,6 +59,30 @@ defmodule SudokuValidator.Grid do
     |> concat_fetched_items()
   end
 
+  def fetch_subgroup(grid, subgroup_number) do
+    case subgroup_number do
+      0 ->
+        grid["upper"]["left"]
+      1 ->
+        grid["upper"]["center"]
+      2 ->
+        grid["upper"]["right"]
+      3 ->
+        grid["center"]["left"]
+      4 ->
+        grid["center"]["center"]
+      5 ->
+        grid["center"]["right"]
+      6 ->
+        grid["lower"]["left"]
+      7 ->
+        grid["lower"]["center"]
+      8 ->
+        grid["lower"]["right"]
+    end
+    |> concat_fetched_items()
+  end
+
   defp concat_fetched_items(items) do
     Enum.reduce(items, [], fn single_item, acc ->
       Enum.concat(acc, single_item)
