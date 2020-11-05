@@ -28,12 +28,4 @@ defmodule SudokuValidatorTest do
     assert column_result == "This sudoku grid is invalid."
     assert subgroup_result == "This sudoku grid is invalid."
   end
-
-  test "validate_row/2 checks if a row is valid" do
-    {:ok, invalid_due_to_row} = File.read(File.cwd! <> "/test/fixtures/invalid_due_to_row_dupe.sudoku")
-    {:ok, valid_grid} = File.read(File.cwd! <> "/test/fixtures/valid_complete.sudoku")
-
-    assert SudokuValidator.validate_row(valid_grid, 0) == :valid
-    assert SudokuValidator.validate_row(invalid_due_to_row, 0) == :invalid
-  end
 end
